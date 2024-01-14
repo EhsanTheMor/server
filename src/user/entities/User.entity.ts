@@ -5,7 +5,7 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ unique: true })
   email: string;
 
   @Column()
@@ -14,6 +14,6 @@ export class User {
   @Column()
   password: string;
 
-  @Column()
+  @Column({ nullable: true })
   imageUrl: string;
 }
