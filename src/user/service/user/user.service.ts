@@ -9,15 +9,11 @@ export class UserService {
   /**
    *
    */
-  constructor(@InjectRepository(User) private userRepo: Repository<User>) {}
+  constructor(@InjectRepository(User) private userRepo: Repository<User>) { }
 
   async createNewUser(user: CreateUserDto) {
     //Checks if any one before has signed up with this email.
-    const oldUser = await this.userRepo.find({
-      where: {
-        email: user.email,
-      },
-    });
+    const oldUser = await this.getUserByEmail(user.email);
     if (oldUser.length > 0) {
       throw new BadRequestException('Email address have been used before.');
     }
@@ -44,9 +40,17 @@ export class UserService {
     return users;
   }
 
-  async getUserWithEmail(userEmail?: string) {}
+  async getUserByEmail(userEmail?: string) {
+    const user = await this.userRepo.find({
+      where: {
+        email: userEmail,
+      }
+    });
 
-  async getUserWithId(userId: number) {
+    return user;
+  }
+
+  async getUserById(userId: number) {
     const user = await this.userRepo.find({ where: { id: userId } });
 
     return user;
