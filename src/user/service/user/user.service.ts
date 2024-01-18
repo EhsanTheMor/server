@@ -9,7 +9,7 @@ export class UserService {
   /**
    *
    */
-  constructor(@InjectRepository(User) private userRepo: Repository<User>) { }
+  constructor(@InjectRepository(User) private userRepo: Repository<User>) {}
 
   async createNewUser(user: CreateUserDto) {
     //Checks if any one before has signed up with this email.
@@ -44,7 +44,7 @@ export class UserService {
     const user = await this.userRepo.find({
       where: {
         email: userEmail,
-      }
+      },
     });
 
     return user;

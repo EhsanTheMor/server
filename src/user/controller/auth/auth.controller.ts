@@ -1,16 +1,19 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, UseInterceptors } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { Serialize } from 'src/interceptors/serialize.interceptor';
-import { CreateUserDto } from 'src/user/dtos/create-user.dto';
 import { SignInDto } from 'src/user/dtos/sign-in.dto';
 import { SignUpDto } from 'src/user/dtos/sign-up.dto';
 import { UserDto } from 'src/user/dtos/user.dto';
+import { JwtInterceptor } from 'src/user/interceptors/jwt.interceptor';
 import { AuthService } from 'src/user/service/auth/auth.service';
 
+@UseInterceptors(JwtInterceptor)
 @Controller('auth')
 export class AuthController {
   constructor(
-    private authService: AuthService
-  ) { }
+    private authService: AuthService,
+    private jwtService: JwtService,
+  ) {}
 
   @Serialize(UserDto)
   @Post('signin')
