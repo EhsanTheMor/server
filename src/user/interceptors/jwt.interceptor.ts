@@ -4,7 +4,7 @@ import { ServerResponse } from 'http';
 import { Observable, map } from 'rxjs';
 
 export class JwtInterceptor implements NestInterceptor {
-  constructor(private jwtService: JwtService) {}
+  constructor(private jwtService: JwtService) { }
 
   intercept(
     context: ExecutionContext,
@@ -14,6 +14,7 @@ export class JwtInterceptor implements NestInterceptor {
     return next.handle().pipe(
       map((data: any) => {
         const request = context.switchToHttp().getResponse<ServerResponse>();
+        console.log(this.jwtService)
         request.setHeader('Authorization', 'Bearer ');
         return data;
       }),
