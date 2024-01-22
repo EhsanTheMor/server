@@ -3,6 +3,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppService } from './app.service';
 import { jwtConstants } from './constants/constants';
+import { Category } from './post/entities/category.entity';
 import { Post } from './post/entities/post.entity';
 import { PostModule } from './post/post.module';
 import { User } from './user/entities/User.entity';
@@ -13,7 +14,7 @@ import { UserModule } from './user/user.module';
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: 'db.sqlite',
-      entities: [User, Post],
+      entities: [User, Post, Category],
       synchronize: true,
     }),
     UserModule,

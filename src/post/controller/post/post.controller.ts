@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { CreatePostDto } from '../dtos/create-post.dto';
-import { GetAllPostDto } from '../dtos/get-all-post.dto';
-import { PostService } from '../service/post.service';
+import { CreatePostDto } from '../../dtos/create-post.dto';
+import { GetAllPostDto } from '../../dtos/get-all-post.dto';
+import { PostService } from '../../service/post/post.service';
 
 @Controller('post')
 export class PostController {

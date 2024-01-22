@@ -8,5 +8,5 @@ export class CreatePostDto {
   description: string;
 
   @IsString()
-  category: string;
+  category: number;
 }
