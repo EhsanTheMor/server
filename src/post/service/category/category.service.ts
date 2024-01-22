@@ -36,7 +36,7 @@ export class CategoryService {
     });
 
     if (!!oldCategory) {
-      return new BadRequestException('This category already exist.');
+      throw new BadRequestException('This category already exist.');
     }
 
     const category = this.categoryRepo.create({

@@ -8,6 +8,7 @@ export class CategoryController {
 
   @Post()
   createNewCategory(@Body() body: CreateCategoryDto) {
+    console.log('first');
     this.categoryService.createNewCategory(body);
   }
 
