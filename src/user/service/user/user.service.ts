@@ -23,6 +23,7 @@ export class UserService {
       email: user.email,
       imageUrl: user?.imageUrl,
       password: user.password,
+      role: user.role,
     });
 
     return this.userRepo.save(newUser);
@@ -54,5 +55,9 @@ export class UserService {
     const user = await this.userRepo.find({ where: { id: userId } });
 
     return user;
+  }
+
+  async updateUserBuyOtherModules(user: User) {
+    return this.userRepo.save(user);
   }
 }

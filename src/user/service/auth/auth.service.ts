@@ -22,7 +22,7 @@ export class AuthService {
     const providedPassword = providedPasswordBuffer.toString('hex');
 
     if (providedPassword === userPassword) {
-      return { access_token: this.jwtService.sign({ id: user.id, email: user.email }) }
+      return { id: user.id, email: user.email }
     } else {
       throw new BadRequestException('Email or password is not right');
     }

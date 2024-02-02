@@ -11,6 +11,9 @@ export class SignUpDto {
   password: string;
 
   @IsString()
+  role: string;
+
+  @IsString()
   passwordConfirmation: string;
 
   @IsString()
