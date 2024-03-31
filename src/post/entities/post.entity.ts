@@ -1,5 +1,6 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Category } from './category.entity';
+import { User } from 'src/user/entities/User.entity';
 
 @Entity()
 export class Post {
@@ -23,6 +24,9 @@ export class Post {
 
   @Column({ nullable: true })
   modifiedBy: string;
+
+  @ManyToOne(() => User, (user) => user.posts)
+  createdBy: User;
 
   @ManyToOne(() => Category, (category) => category.posts)
   category: Category;

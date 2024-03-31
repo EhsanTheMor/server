@@ -1,5 +1,13 @@
 import { Category } from 'src/post/entities/category.entity';
-import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Post } from 'src/post/entities/post.entity';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class User {
@@ -23,6 +31,12 @@ export class User {
 
   @Column({ nullable: true })
   imageUrl: string;
+
+  @OneToMany(() => Category, (category) => category.createdBy)
+  createdCategories: Category[];
+
+  @OneToMany(() => Post, (post) => post.createdBy)
+  posts: Post[];
 
   @ManyToMany(() => Category)
   @JoinTable()
