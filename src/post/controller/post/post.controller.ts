@@ -37,8 +37,6 @@ export class PostController {
     @UploadedFile() file: Express.Multer.File,
     @Body() body: { [key: string]: string },
   ) {
-    console.log(file);
-    console.log(body.username);
     return 'thanks';
   }
 }

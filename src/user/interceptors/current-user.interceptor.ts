@@ -9,7 +9,6 @@ export class CurrentUserInterceptor implements NestInterceptor {
     const request = context.switchToHttp().getRequest();
 
     const jwt = request.headers['jwt'];
-    console.log(jwt);
 
     return next.handle();
   }

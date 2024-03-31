@@ -12,6 +12,8 @@ export class SignUpDto {
 
   @IsString()
   role: string;
+  // TODO
+  // remove role from here only admin can create admin
 
   @IsString()
   passwordConfirmation: string;

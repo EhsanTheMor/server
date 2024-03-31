@@ -1,8 +1,13 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { BuyCategoriesDto } from 'src/post/dtos/buy-categories.dto';
 import { CreateCategoryDto } from 'src/post/dtos/create-category.dto';
 import { Category } from 'src/post/entities/category.entity';
+import { User } from 'src/user/entities/User.entity';
 import { UserService } from 'src/user/service/user/user.service';
 import { Repository } from 'typeorm';
 
@@ -11,7 +16,22 @@ export class CategoryService {
   constructor(
     @InjectRepository(Category) private categoryRepo: Repository<Category>,
     private userService: UserService,
-  ) { }
+  ) {}
+
+  async createNewCategory(
+    categoryDetail: CreateCategoryDto,
+    currentUser: User,
+  ) {
+    const user = await this.userService.getUserById(currentUser.id);
+
+    const category = this.categoryRepo.create({
+      ...categoryDetail,
+      createdAt: new Date(),
+    });
+    category.createdBy = user;
+
+    return this.categoryRepo.save(category);
+  }
 
   getOneCategoryById(id: number) {
     return this.categoryRepo.findOne({
@@ -21,36 +41,20 @@ export class CategoryService {
     });
   }
 
-  getAll(limit: number, offset: number) {
-    return {
-      category: this.categoryRepo.find({
-        take: limit,
-        skip: offset,
-      }),
-    };
-  }
-
-  async createNewCategory(categoryDetail: CreateCategoryDto) {
-    const oldCategory = await this.categoryRepo.findOne({
-      where: {
-        source: categoryDetail.source,
-        destination: categoryDetail.destination,
+  async getAll(limit: number, offset: number) {
+    const categories = await this.categoryRepo.find({
+      take: limit,
+      skip: offset,
+      relations: {
+        posts: true,
       },
     });
 
-    if (!!oldCategory) {
-      throw new BadRequestException('This category already exist.');
-    }
-
-    const category = this.categoryRepo.create({
-      ...categoryDetail,
-      createdAt: new Date(),
-    });
-    return this.categoryRepo.save(category);
+    return categories;
   }
 
   async buyCategories(email: string, body: BuyCategoriesDto) {
-    const user = await this.userService.getUserByEmail(email)
+    const user = await this.userService.getUserByEmail(email);
     if (!user) {
       throw new NotFoundException();
     }
@@ -61,11 +65,13 @@ export class CategoryService {
 
     let categories: Category[] = [];
     for (let category of body.categories) {
-      const foundCategory = await this.categoryRepo.findOne({ where: { id: category } })
+      const foundCategory = await this.categoryRepo.findOne({
+        where: { id: category },
+      });
       categories.push(foundCategory);
     }
     user.AccessedCategories = categories;
 
-    return this.userService.updateUserBuyOtherModules(user)
+    return this.userService.updateUserBuyOtherModules(user);
   }
 }
