@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Get,
@@ -19,8 +20,8 @@ export class UserController {
   constructor(private userService: UserService) {}
 
   @Get()
-  getAllUsers() {
-    return this.userService.getAllUsers();
+  getAllUsers(@Param() param: { limit: number; offset: number }) {
+    return this.userService.getAllUsers(param.limit, param.offset);
   }
 
   @Get('/:id')
@@ -30,11 +31,16 @@ export class UserController {
 
   @Post()
   createUser(@Body() body: CreateUserDto) {
+    if (body.passwordConfirmation !== body.password) {
+      throw new BadRequestException('رمز و تاییدیه رمز همخوانی ندارد.');
+    }
+
     return this.userService.createNewUser(body);
   }
 
-  @Patch()
-  updateUser() {
-    return 'user';
-  }
+  // @Patch()
+  // updateUser() {
+  //   return 'user';
+  // TODO
+  // }
 }

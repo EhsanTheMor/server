@@ -9,13 +9,13 @@ export class UserService {
   /**
    *
    */
-  constructor(@InjectRepository(User) private userRepo: Repository<User>) { }
+  constructor(@InjectRepository(User) private userRepo: Repository<User>) {}
 
   async createNewUser(user: CreateUserDto) {
     //Checks if any one before has signed up with this email.
     const oldUser = await this.getUserByEmail(user.email);
     if (oldUser) {
-      throw new BadRequestException('Email address have been used before.');
+      throw new BadRequestException('آدرس ایمیل قبلا استفاده شده است.');
     }
 
     const newUser = this.userRepo.create({
@@ -29,10 +29,7 @@ export class UserService {
     return this.userRepo.save(newUser);
   }
 
-  async getAllUsers(requestLimit?: number, requestOffset?: number) {
-    let limit = requestLimit || 20;
-    let offset = requestOffset || 0;
-
+  async getAllUsers(limit: number, offset: number) {
     const users = await this.userRepo.find({
       take: limit,
       skip: offset,
@@ -41,7 +38,7 @@ export class UserService {
     return users;
   }
 
-  async getUserByEmail(userEmail?: string) {
+  async getUserByEmail(userEmail?: string): Promise<User | null> {
     const user = await this.userRepo.findOne({
       where: {
         email: userEmail,
@@ -51,8 +48,12 @@ export class UserService {
     return user;
   }
 
-  async getUserById(userId: number) {
-    const user = await this.userRepo.find({ where: { id: userId } });
+  async getUserById(userId: number): Promise<User> {
+    const user = await this.userRepo.findOne({ where: { id: userId } });
+
+    if (!user) {
+      throw new BadRequestException('کاربری با این مشخصات وجود ندارد.');
+    }
 
     return user;
   }

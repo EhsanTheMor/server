@@ -9,7 +9,10 @@ const scrypt = promisify(_scrypt);
 
 @Injectable()
 export class AuthService {
-  constructor(private userService: UserService, private jwtService: JwtService) { }
+  constructor(
+    private userService: UserService,
+    private jwtService: JwtService,
+  ) {}
 
   async signIn(email: string, password: string) {
     const user = await this.userService.getUserByEmail(email);
@@ -22,18 +25,13 @@ export class AuthService {
     const providedPassword = providedPasswordBuffer.toString('hex');
 
     if (providedPassword === userPassword) {
-      return { id: user.id, email: user.email }
+      return { id: user.id, email: user.email };
     } else {
       throw new BadRequestException('Email or password is not right');
     }
   }
 
   async signUp(userReq: SignUpDto) {
-    //Checks if password and password confirmation is same.
-    if (userReq.password !== userReq.passwordConfirmation) {
-      throw new BadRequestException('Please confirms your password.');
-    }
-
     //Hashes the password.
     const salt = randomBytes(8).toString('hex');
     const hash = (await scrypt(userReq.password, salt, 32)) as Buffer;
@@ -44,7 +42,8 @@ export class AuthService {
       password: newPassword,
     });
 
-    return { access_token: this.jwtService.sign({ id: user.id, email: user.email }) }
-
+    return {
+      access_token: this.jwtService.sign({ id: user.id, email: user.email }),
+    };
   }
 }
