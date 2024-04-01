@@ -8,10 +8,12 @@ import { CategoryService } from './service/category/category.service';
 import { PostService } from './service/post/post.service';
 import { UserService } from 'src/user/service/user/user.service';
 import { UserModule } from 'src/user/user.module';
+import { FileService } from './service/file/file.service';
+import { File } from './entities/file.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Post, Category]), UserModule],
-  providers: [PostService, CategoryService],
+  imports: [TypeOrmModule.forFeature([Post, Category, File]), UserModule],
+  providers: [PostService, CategoryService, FileService],
   controllers: [PostController, CategoryController],
 })
-export class PostModule { }
+export class PostModule {}

@@ -9,13 +9,14 @@ import { PostModule } from './post/post.module';
 import { User } from './user/entities/User.entity';
 import { UserModule } from './user/user.module';
 import { CurrentUserMiddleware } from './middlewares/current-user.middleware';
+import { File } from './post/entities/file.entity';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: 'db.sqlite',
-      entities: [User, Post, Category],
+      entities: [User, Post, Category, File],
       synchronize: true,
     }),
     UserModule,
@@ -28,9 +29,8 @@ import { CurrentUserMiddleware } from './middlewares/current-user.middleware';
   ],
   providers: [AppService],
 })
-
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(CurrentUserMiddleware).forRoutes('*')
+    consumer.apply(CurrentUserMiddleware).forRoutes('*');
   }
 }

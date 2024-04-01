@@ -12,13 +12,14 @@ export class PostService {
     private categoryService: CategoryService,
   ) {}
 
-  async createPost(postDetail: CreatePostDto) {
+  async createPost(postDetail: CreatePostDto, imageUrl: string | undefined) {
     const category = await this.categoryService.getOneCategoryById(
       postDetail.category,
     );
 
     const post = this.postRepo.create({
       ...postDetail,
+      imageUrl,
       createdAt: new Date(),
       category: category,
     });
@@ -31,6 +32,12 @@ export class PostService {
       relations: {
         category: true,
       },
+    });
+  }
+
+  deletePost(id: number) {
+    return this.postRepo.delete({
+      id,
     });
   }
 }
