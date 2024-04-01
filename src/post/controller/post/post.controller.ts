@@ -15,29 +15,12 @@ import { GetAllPostDto } from '../../dtos/get-all-post.dto';
 import { PostService } from '../../service/post/post.service';
 import { CurrentUserGuard } from 'src/post/guards/current-user.guard';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { diskStorage } from 'multer';
-import { FileService } from '../../service/file/file.service';
 import { Response } from 'express';
-
-const storage = {
-  storage: diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, 'uploads');
-    },
-    filename: function (req, file, cb) {
-      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
-      const extension = path.parse(file.originalname).ext;
-      cb(null, file.fieldname + '-' + uniqueSuffix + extension);
-    },
-  }),
-};
+import { storage } from 'src/post/constants/fileUploadStorage';
 
 @Controller('post')
 export class PostController {
-  constructor(
-    private postService: PostService,
-    private fileService: FileService,
-  ) {}
+  constructor(private postService: PostService) {}
 
   @Get()
   getAllPosts(@Param() param: GetAllPostDto) {
@@ -53,13 +36,17 @@ export class PostController {
     @UploadedFile() file: Express.Multer.File,
     @Body() body: CreatePostDto,
   ) {
-    const newFile = await this.fileService.saveFile(file);
-    return this.postService.createPost(body, newFile && newFile.filename);
+    return this.postService.createPost(body, file.filename);
+  }
+
+  @Get('/:id')
+  async getOnePost(@Param('id') id: number) {
+    const post = await this.postService.getPostById(id);
+    return post;
   }
 
   @Get('getfile/:filename')
   async getfile(@Param('filename') filename: string, @Res() res: Response) {
-    const file = await this.fileService.findByName(filename);
-    return res.sendFile(path.join(process.cwd(), 'uploads', file.filename));
+    return res.sendFile(path.join(process.cwd(), 'uploads', filename));
   }
 }

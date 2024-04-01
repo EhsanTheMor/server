@@ -27,6 +27,16 @@ export class PostService {
     return this.postRepo.save(post);
   }
 
+  async getPostById(id: number) {
+    const post = await this.postRepo.findOne({
+      where: {
+        id,
+      },
+    });
+
+    return post;
+  }
+
   getAllPosts(limit: number, offset: number) {
     return this.postRepo.find({
       relations: {
