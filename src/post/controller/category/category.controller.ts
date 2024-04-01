@@ -11,15 +11,15 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { CreateCategoryDto } from 'src/post/dtos/create-category.dto';
-import { CurrentUserGuard } from 'src/post/guards/current-user.guard';
+import { AuthGuard } from 'src/guards/auth.guard';
 import { CategoryService } from 'src/post/service/category/category.service';
 import { BuyCategoriesDto } from 'src/post/dtos/buy-categories.dto';
 
+@UseGuards(AuthGuard)
 @Controller('category')
 export class CategoryController {
   constructor(private categoryService: CategoryService) {}
 
-  @UseGuards(CurrentUserGuard)
   @Post()
   createNewCategory(@Body() body: CreateCategoryDto, @Request() req: Request) {
     // @ts-ignore

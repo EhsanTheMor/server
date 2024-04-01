@@ -13,11 +13,12 @@ import {
 import { CreatePostDto } from '../../dtos/create-post.dto';
 import { GetAllPostDto } from '../../dtos/get-all-post.dto';
 import { PostService } from '../../service/post/post.service';
-import { CurrentUserGuard } from 'src/post/guards/current-user.guard';
+import { AuthGuard } from 'src/guards/auth.guard';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Response } from 'express';
-import { storage } from 'src/post/constants/fileUploadStorage';
+import { storage } from 'src/post/constants/file-upload-storage.constants';
 
+@UseGuards(AuthGuard)
 @Controller('post')
 export class PostController {
   constructor(private postService: PostService) {}
@@ -29,7 +30,6 @@ export class PostController {
     return this.postService.getAllPosts(limit, offset);
   }
 
-  @UseGuards(CurrentUserGuard)
   @Post()
   @UseInterceptors(FileInterceptor('file', storage))
   async createNewPost(

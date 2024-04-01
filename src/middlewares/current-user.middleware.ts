@@ -14,24 +14,38 @@ declare global {
 
 @Injectable()
 export class CurrentUserMiddleware implements NestMiddleware {
-  constructor(private jwtService: JwtService) {}
+  constructor(
+    private jwtService: JwtService,
+    private userService: UserService,
+  ) {}
 
   async use(req: Request, res: Response, next: NextFunction) {
+    // checkes if it has jwt authorization header
     const jwt = req.headers['authorization'];
 
     if (!jwt) {
-      next();
-    } else {
-      const [_, token] = jwt?.split(' ');
-
-      if (token) {
-        const user = await this.jwtService.verify(token, {
-          secret: jwtConstants.secret,
-        });
-        req.currentUser = user;
-      }
-
-      next();
+      return next();
     }
+
+    // checkes if the token is still valid or not
+    const token = jwt.split(' ')[1];
+    let user;
+    try {
+      user = this.jwtService.verify(token, {
+        secret: jwtConstants.secret,
+      });
+    } catch (e) {
+      return next();
+    }
+
+    // checkes if user exists or not
+    const currentUser = await this.userService.getUserByEmail(user.email);
+    if (!currentUser) {
+      return next();
+    }
+
+    req.currentUser = currentUser;
+
+    return next();
   }
 }

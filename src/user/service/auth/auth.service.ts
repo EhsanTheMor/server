@@ -4,6 +4,7 @@ import { SignUpDto } from 'src/user/dtos/sign-up.dto';
 import { promisify } from 'util';
 import { UserService } from '../user/user.service';
 import { JwtService } from '@nestjs/jwt';
+import { ROLES } from 'src/user/constants/roles.constants';
 
 const scrypt = promisify(_scrypt);
 
@@ -25,7 +26,9 @@ export class AuthService {
     const providedPassword = providedPasswordBuffer.toString('hex');
 
     if (providedPassword === userPassword) {
-      return { id: user.id, email: user.email };
+      return {
+        access_token: this.jwtService.sign({ id: user.id, email: user.email }),
+      };
     } else {
       throw new BadRequestException('Email or password is not right');
     }
@@ -40,6 +43,7 @@ export class AuthService {
     const user = await this.userService.createNewUser({
       ...userReq,
       password: newPassword,
+      role: ROLES.USER,
     });
 
     return {

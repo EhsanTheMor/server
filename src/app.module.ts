@@ -9,14 +9,13 @@ import { PostModule } from './post/post.module';
 import { User } from './user/entities/User.entity';
 import { UserModule } from './user/user.module';
 import { CurrentUserMiddleware } from './middlewares/current-user.middleware';
-import { File } from './post/entities/file.entity';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: 'db.sqlite',
-      entities: [User, Post, Category, File],
+      entities: [User, Post, Category],
       synchronize: true,
     }),
     UserModule,

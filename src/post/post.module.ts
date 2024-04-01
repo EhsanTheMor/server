@@ -7,10 +7,9 @@ import { Post } from './entities/post.entity';
 import { CategoryService } from './service/category/category.service';
 import { PostService } from './service/post/post.service';
 import { UserModule } from 'src/user/user.module';
-import { File } from './entities/file.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Post, Category, File]), UserModule],
+  imports: [TypeOrmModule.forFeature([Post, Category]), UserModule],
   providers: [PostService, CategoryService],
   controllers: [PostController, CategoryController],
 })
