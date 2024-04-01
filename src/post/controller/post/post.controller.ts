@@ -17,12 +17,14 @@ import { AuthGuard } from 'src/guards/auth.guard';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Response } from 'express';
 import { storage } from 'src/post/constants/file-upload-storage.constants';
+import { AdminGuard } from 'src/guards/admin.guard';
 
 @UseGuards(AuthGuard)
 @Controller('post')
 export class PostController {
   constructor(private postService: PostService) {}
 
+  @UseGuards(AdminGuard)
   @Get()
   getAllPosts(@Param() param: GetAllPostDto) {
     let limit = param.limit || 20;

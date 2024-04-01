@@ -8,6 +8,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { TROLES } from '../constants/roles.constants';
 
 @Entity()
 export class User {
@@ -21,7 +22,7 @@ export class User {
   username: string;
 
   @Column()
-  role: string;
+  role: TROLES;
 
   @Column()
   password: string;

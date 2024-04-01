@@ -1,5 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { ROLES } from 'src/user/constants/roles.constants';
 import { CreateUserDto } from 'src/user/dtos/create-user.dto';
 import { User } from 'src/user/entities/User.entity';
 import { Repository } from 'typeorm';
@@ -23,7 +24,7 @@ export class UserService {
       email: user.email,
       imageUrl: user?.imageUrl,
       password: user.password,
-      role: user.role,
+      role: ROLES.USER,
     });
 
     return this.userRepo.save(newUser);

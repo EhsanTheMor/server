@@ -3,10 +3,8 @@ import {
   Body,
   Controller,
   Get,
-  Param,
   Post,
   Query,
-  Req,
   Request,
   UseGuards,
 } from '@nestjs/common';
@@ -14,6 +12,7 @@ import { CreateCategoryDto } from 'src/post/dtos/create-category.dto';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { CategoryService } from 'src/post/service/category/category.service';
 import { BuyCategoriesDto } from 'src/post/dtos/buy-categories.dto';
+import { CurrentUserDecorator } from 'src/user/decorators/current-user.decorator';
 
 @UseGuards(AuthGuard)
 @Controller('category')
@@ -39,10 +38,10 @@ export class CategoryController {
   }
 
   @Post('/buy')
-  buyCategory(@Body() body: BuyCategoriesDto, @Request() req: Request) {
-    // TODO create a current user interceptor
-    // @ts-ignore
-    const user = req.currentUser;
+  buyCategory(
+    @Body() body: BuyCategoriesDto,
+    @CurrentUserDecorator() user: any,
+  ) {
     return this.categoryService.buyCategories(user?.email, body);
   }
 }
