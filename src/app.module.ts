@@ -9,6 +9,8 @@ import { PostModule } from './post/post.module';
 import { User } from './user/entities/User.entity';
 import { UserModule } from './user/user.module';
 import { CurrentUserMiddleware } from './middlewares/current-user.middleware';
+import { TutorialModule } from './tutorial/tutorial.module';
+import { MessageModule } from './message/message.module';
 
 @Module({
   imports: [
@@ -25,6 +27,8 @@ import { CurrentUserMiddleware } from './middlewares/current-user.middleware';
       signOptions: { expiresIn: '90d' },
     }),
     PostModule,
+    TutorialModule,
+    MessageModule,
   ],
   providers: [AppService],
 })

@@ -19,6 +19,7 @@ import { Response } from 'express';
 import { storage } from 'src/post/constants/file-upload-storage.constants';
 import { AdminGuard } from 'src/guards/admin.guard';
 
+// TODO: setup serilization
 @UseGuards(AuthGuard)
 @Controller('post')
 export class PostController {
@@ -32,6 +33,7 @@ export class PostController {
     return this.postService.getAllPosts(limit, offset);
   }
 
+  // TODO: setup file guard
   @Post()
   @UseInterceptors(FileInterceptor('file', storage))
   async createNewPost(

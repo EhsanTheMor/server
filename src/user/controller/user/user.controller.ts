@@ -11,6 +11,8 @@ import {
 import { CreateUserDto } from 'src/user/dtos/create-user.dto';
 import { UserService } from 'src/user/service/user/user.service';
 
+// TODO: setup serilization
+// TODO: setup admin guard
 @Controller('user')
 export class UserController {
   constructor(private userService: UserService) {}
@@ -37,6 +39,6 @@ export class UserController {
   // @Patch()
   // updateUser() {
   //   return 'user';
-  // TODO
+  // TODO: setup update user route
   // }
 }

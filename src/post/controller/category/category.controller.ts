@@ -14,6 +14,8 @@ import { CategoryService } from 'src/post/service/category/category.service';
 import { BuyCategoriesDto } from 'src/post/dtos/buy-categories.dto';
 import { CurrentUserDecorator } from 'src/user/decorators/current-user.decorator';
 
+// TODO: setup serilization
+// TODO: setup admin guard
 @UseGuards(AuthGuard)
 @Controller('category')
 export class CategoryController {
