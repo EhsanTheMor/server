@@ -1,5 +1,5 @@
-import path from 'path';
 import {
+  BadRequestException,
   Body,
   Controller,
   Get,
@@ -10,14 +10,16 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { Response } from 'express';
+import path from 'path';
+import { AuthGuard } from 'src/guards/auth.guard';
+import { Serialize } from 'src/interceptors/serialize.interceptor';
+import { storage } from 'src/post/constants/file-upload-storage.constants';
+import { PostDto } from 'src/post/dtos/post.dto';
 import { CreatePostDto } from '../../dtos/create-post.dto';
 import { GetAllPostDto } from '../../dtos/get-all-post.dto';
 import { PostService } from '../../service/post/post.service';
-import { AuthGuard } from 'src/guards/auth.guard';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { Response } from 'express';
-import { storage } from 'src/post/constants/file-upload-storage.constants';
-import { AdminGuard } from 'src/guards/admin.guard';
 
 // TODO: setup serilization
 @UseGuards(AuthGuard)
@@ -25,7 +27,8 @@ import { AdminGuard } from 'src/guards/admin.guard';
 export class PostController {
   constructor(private postService: PostService) {}
 
-  @UseGuards(AdminGuard)
+  // TODO: transform createdby from User entity to
+  @Serialize(PostDto)
   @Get()
   getAllPosts(@Param() param: GetAllPostDto) {
     let limit = param.limit || 20;
@@ -37,9 +40,12 @@ export class PostController {
   @Post()
   @UseInterceptors(FileInterceptor('file', storage))
   async createNewPost(
-    @UploadedFile() file: Express.Multer.File,
     @Body() body: CreatePostDto,
+    @UploadedFile() file: Express.Multer.File,
   ) {
+    if (!file) {
+      return new BadRequestException('عکسی برای این پست ارسال نشده است.');
+    }
     return this.postService.createPost(body, file.filename);
   }
 
