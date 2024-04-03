@@ -1,5 +1,4 @@
 import { Expose, Transform } from 'class-transformer';
-import { Category } from '../entities/category.entity';
 
 export class PostDto {
   @Expose()
@@ -17,7 +16,7 @@ export class PostDto {
   @Expose()
   imageUrl: string;
 
+  @Transform(({ obj }) => obj.category.id)
   @Expose()
-  @Transform(({ value }) => value.id)
-  category: Category;
+  categoryId: number;
 }

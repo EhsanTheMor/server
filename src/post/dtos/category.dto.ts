@@ -1,15 +1,12 @@
 import { Expose } from 'class-transformer';
 
-export class UserDto {
+export class CategoryDto {
   @Expose()
   id: number;
 
   @Expose()
-  username: string;
+  title: string;
 
   @Expose()
-  email: string;
-
-  @Expose()
-  imageUrl: string;
+  crreatedAt: Date;
 }

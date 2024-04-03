@@ -39,6 +39,8 @@ export class PostService {
 
   getAllPosts(limit: number, offset: number) {
     return this.postRepo.find({
+      take: limit,
+      skip: offset,
       relations: {
         category: true,
       },

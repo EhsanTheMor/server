@@ -21,15 +21,13 @@ import { CreatePostDto } from '../../dtos/create-post.dto';
 import { GetAllPostDto } from '../../dtos/get-all-post.dto';
 import { PostService } from '../../service/post/post.service';
 
-// TODO: setup serilization
 @UseGuards(AuthGuard)
 @Controller('post')
 export class PostController {
   constructor(private postService: PostService) {}
 
-  // TODO: transform createdby from User entity to
-  @Serialize(PostDto)
   @Get()
+  @Serialize(PostDto)
   getAllPosts(@Param() param: GetAllPostDto) {
     let limit = param.limit || 20;
     let offset = param.offset || 0;
@@ -38,6 +36,7 @@ export class PostController {
 
   // TODO: setup file guard
   @Post()
+  @Serialize(PostDto)
   @UseInterceptors(FileInterceptor('file', storage))
   async createNewPost(
     @Body() body: CreatePostDto,
@@ -50,6 +49,7 @@ export class PostController {
   }
 
   @Get('/:id')
+  @Serialize(PostDto)
   async getOnePost(@Param('id') id: number) {
     const post = await this.postService.getPostById(id);
     return post;
