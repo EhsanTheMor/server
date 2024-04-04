@@ -1,0 +1,16 @@
+1. Programming:
+	a. build a full game with unity up to 6 first month
+	b. fully skilled typescript(react, angular, express, nestjs, nodejs), c#(asp.net, wpf, unity) programmer.
+	c. ducker 
+	d. kuberneties
+
+2. Physics
+	a. thermodynamics
+	b. statistical mechanics
+	c. quantum information
+
+2. Books:
+	a. black and red
+	c. Zorba the Greek
+	d. emancipated spector
+	

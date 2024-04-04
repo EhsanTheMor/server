@@ -27,7 +27,7 @@ export class TutorialService {
     return tutorials;
   }
 
-  async getTutorialById(id: number) {
+  async getTutorialById(id: number, contentOrder: 'ASC' | 'DESC' = 'ASC') {
     const tutorial = await this.tutorialRepo.findOne({
       where: {
         id,
@@ -36,6 +36,11 @@ export class TutorialService {
         createdBy: true,
         season: true,
         contents: true,
+      },
+      order: {
+        contents: {
+          id: 'ASC',
+        },
       },
     });
 

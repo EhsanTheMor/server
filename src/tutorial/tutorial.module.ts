@@ -12,13 +12,14 @@ import { SemesterController } from './controllers/semester/semester.controller';
 import { SeasonController } from './controllers/season/season.controller';
 import { SeasonService } from './services/season/season.service';
 import { SemesterService } from './services/semester/semester.service';
+import { ContentController } from './controllers/content/content.controller';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Content, Semester, Season, Tutorial]),
     UserModule,
   ],
-  controllers: [TutorialController, SemesterController, SeasonController],
+  controllers: [TutorialController, SemesterController, SeasonController, ContentController],
   providers: [TutorialService, ContentService, SeasonService, SemesterService],
 })
 export class TutorialModule {}
