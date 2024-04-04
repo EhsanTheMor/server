@@ -9,6 +9,10 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { TROLES } from '../constants/roles.constants';
+import { Semester } from 'src/tutorial/entities/semester.entity';
+import { Season } from 'src/tutorial/entities/season.entity';
+import { Tutorial } from 'src/tutorial/entities/tutorial.entity';
+import { Content } from 'src/tutorial/entities/content.entity';
 
 @Entity()
 export class User {
@@ -32,6 +36,18 @@ export class User {
 
   @Column({ nullable: true })
   imageUrl: string;
+
+  @OneToMany(() => Content, (content) => content.createdBy)
+  createdContents: Content[];
+
+  @OneToMany(() => Tutorial, (tutorial) => tutorial.createdBy)
+  createdTutorials: Tutorial[];
+
+  @OneToMany(() => Semester, (semester) => semester.createdBy)
+  createdSemesters: Semester[];
+
+  @OneToMany(() => Season, (season) => season.createdBy)
+  createdSeasons: Season[];
 
   @OneToMany(() => Category, (category) => category.createdBy)
   createdCategories: Category[];
