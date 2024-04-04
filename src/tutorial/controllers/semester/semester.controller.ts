@@ -37,7 +37,7 @@ export class SemesterController {
     const semester = await this.semesterService.getSemesterById(id);
 
     if (!semester) {
-      return new BadRequestException('فصل انتخاب شده وجود ندارد.');
+      throw new BadRequestException('فصل انتخاب شده وجود ندارد.');
     }
 
     return semester;

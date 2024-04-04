@@ -58,7 +58,7 @@ export class SeasonService {
     );
 
     if (!semester) {
-      return new BadRequestException('ترم انتخاب شده صحیح نیست.');
+      throw new BadRequestException('ترم انتخاب شده صحیح نیست.');
     }
 
     const newSeason = await this.seasonRepo.create({

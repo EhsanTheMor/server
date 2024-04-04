@@ -43,7 +43,7 @@ export class PostController {
     @UploadedFile() file: Express.Multer.File,
   ) {
     if (!file) {
-      return new BadRequestException('عکسی برای این پست ارسال نشده است.');
+      throw new BadRequestException('عکسی برای این پست ارسال نشده است.');
     }
     return this.postService.createPost(body, file.filename);
   }
