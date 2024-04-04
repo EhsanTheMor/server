@@ -4,6 +4,7 @@ import {
   Controller,
   Get,
   Param,
+  Patch,
   Post,
   UseGuards,
 } from '@nestjs/common';
@@ -13,7 +14,6 @@ import { CreateUserDto } from 'src/user/dtos/create-user.dto';
 import { UserDto } from 'src/user/dtos/user.dto';
 import { UserService } from 'src/user/service/user/user.service';
 
-@UseGuards(AdminGuard)
 @Controller('user')
 export class UserController {
   constructor(private userService: UserService) {}
@@ -38,6 +38,11 @@ export class UserController {
     }
 
     return this.userService.createNewUser(body);
+  }
+
+  @Patch('/:id')
+  makeUserAdmin(@Param('id') id: number) {
+    return this.userService.makeUserAdmin(id);
   }
 
   // @Patch()

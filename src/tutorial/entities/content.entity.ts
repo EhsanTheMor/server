@@ -28,9 +28,13 @@ export class Content {
   @Column()
   displayOrder: number;
 
-  @ManyToOne(() => User, (user) => user.id)
+  @ManyToOne(() => User, (user) => user.id, {
+    onDelete: 'CASCADE',
+  })
   createdBy: User;
 
-  @ManyToOne(() => Tutorial, (tutorial) => tutorial.id)
+  @ManyToOne(() => Tutorial, (tutorial) => tutorial.id, {
+    onDelete: 'CASCADE',
+  })
   tutorial: Tutorial;
 }

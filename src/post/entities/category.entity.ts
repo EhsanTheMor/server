@@ -20,7 +20,9 @@ export class Category {
   @Column()
   createdAt: Date;
 
-  @ManyToOne(() => User, (user) => user.createdCategories)
+  @ManyToOne(() => User, (user) => user.createdCategories, {
+    onDelete: 'CASCADE',
+  })
   createdBy: User;
 
   @OneToMany(() => Post, (post) => post.category)

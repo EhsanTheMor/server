@@ -65,4 +65,13 @@ export class SemesterService {
 
     return this.semesterRepo.save(semester);
   }
+
+  async deleteSemester(id: number) {
+    const semester = await this.semesterRepo.findOne({
+      where: {
+        id,
+      },
+    });
+    return this.semesterRepo.delete(semester);
+  }
 }

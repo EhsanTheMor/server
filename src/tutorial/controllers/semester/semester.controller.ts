@@ -2,6 +2,7 @@ import {
   BadRequestException,
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
@@ -51,5 +52,10 @@ export class SemesterController {
     @Body() body: CreateSemesterDto,
   ) {
     return this.semesterService.createSemester(body, user.id);
+  }
+
+  @Delete('/:id')
+  deleteSemester(@Param('id') id: number) {
+    return this.semesterService.deleteSemester(id);
   }
 }

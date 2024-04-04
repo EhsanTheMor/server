@@ -7,9 +7,6 @@ import { Repository } from 'typeorm';
 
 @Injectable()
 export class UserService {
-  /**
-   *
-   */
   constructor(@InjectRepository(User) private userRepo: Repository<User>) {}
 
   async createNewUser(user: CreateUserDto) {
@@ -60,6 +57,18 @@ export class UserService {
   }
 
   async updateUserBuyOtherModules(user: User) {
+    return this.userRepo.save(user);
+  }
+
+  async makeUserAdmin(id: number) {
+    const user = await this.userRepo.findOne({
+      where: {
+        id,
+      },
+    });
+
+    user.role = 'ADMIN';
+
     return this.userRepo.save(user);
   }
 }

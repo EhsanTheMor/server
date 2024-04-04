@@ -55,7 +55,9 @@ export class User {
   @OneToMany(() => Post, (post) => post.createdBy)
   posts: Post[];
 
-  @ManyToMany(() => Category)
+  @ManyToMany(() => Category, {
+    onDelete: 'CASCADE',
+  })
   @JoinTable()
   AccessedCategories: Category[];
 }

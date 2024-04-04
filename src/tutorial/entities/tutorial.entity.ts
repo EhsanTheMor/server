@@ -20,12 +20,16 @@ export class Tutorial {
   @Column()
   createdAt: Date;
 
-  @ManyToOne(() => Season, (season) => season.id)
+  @ManyToOne(() => Season, (season) => season.id, {
+    onDelete: 'CASCADE',
+  })
   season: Season;
 
   @OneToMany(() => Content, (content) => content.tutorial)
   contents: Content[];
 
-  @ManyToOne(() => User, (user) => user.id)
+  @ManyToOne(() => User, (user) => user.id, {
+    onDelete: 'CASCADE',
+  })
   createdBy: User;
 }

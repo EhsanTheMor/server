@@ -24,9 +24,13 @@ export class Season {
   @OneToMany(() => Tutorial, (tutorial) => tutorial.season)
   tutorials: Tutorial[];
 
-  @ManyToOne(() => Semester, (semester) => semester.id)
+  @ManyToOne(() => Semester, (semester) => semester.id, {
+    onDelete: 'CASCADE',
+  })
   semester: Semester;
 
-  @ManyToOne(() => User, (user) => user.id)
+  @ManyToOne(() => User, (user) => user.id, {
+    onDelete: 'CASCADE',
+  })
   createdBy: User;
 }
