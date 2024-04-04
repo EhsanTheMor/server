@@ -4,9 +4,11 @@ import {
   Entity,
   ManyToMany,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Semester } from './semester.entity';
+import { Tutorial } from './tutorial.entity';
 
 @Entity()
 export class Season {
@@ -18,6 +20,9 @@ export class Season {
 
   @Column()
   createdAt: Date;
+
+  @OneToMany(() => Tutorial, (tutorial) => tutorial.id)
+  tutorials: Tutorial[];
 
   @ManyToOne(() => Semester, (semester) => semester.id)
   semester: Semester;

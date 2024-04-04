@@ -7,6 +7,7 @@ import { Season } from './entities/season.entity';
 import { Tutorial } from './entities/tutorial.entity';
 import { UserModule } from 'src/user/user.module';
 import { TutorialService } from './services/tutorial/tutorial.service';
+import { ContentService } from './services/content/content.service';
 
 @Module({
   imports: [
@@ -14,6 +15,6 @@ import { TutorialService } from './services/tutorial/tutorial.service';
     UserModule,
   ],
   controllers: [TutorialController],
-  providers: [TutorialService],
+  providers: [TutorialService, ContentService],
 })
 export class TutorialModule {}

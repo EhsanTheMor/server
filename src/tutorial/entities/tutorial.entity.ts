@@ -7,6 +7,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Content } from './content.entity';
+import { Season } from './season.entity';
 
 @Entity()
 export class Tutorial {
@@ -18,6 +19,9 @@ export class Tutorial {
 
   @Column()
   createdAt: Date;
+
+  @ManyToOne(() => Season, (season) => season.tutorials)
+  season: Season;
 
   @OneToMany(() => Content, (content) => content.tutorial)
   contents: Content[];
