@@ -20,7 +20,7 @@ export class Tutorial {
   @Column()
   createdAt: Date;
 
-  @ManyToOne(() => Season, (season) => season.tutorials)
+  @ManyToOne(() => Season, (season) => season.id)
   season: Season;
 
   @OneToMany(() => Content, (content) => content.tutorial)

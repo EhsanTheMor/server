@@ -16,6 +16,7 @@ import { CurrentUserDecorator } from 'src/user/decorators/current-user.decorator
 import { User } from 'src/user/entities/User.entity';
 import { SemesterDto } from 'src/tutorial/dtos/semester.dto';
 import { AdminGuard } from 'src/guards/admin.guard';
+import { extractLimitAndOffset } from 'src/helpers/controller-offset-limit.helper';
 
 @UseGuards(AuthGuard)
 @Controller('semester')
@@ -52,7 +53,3 @@ export class SemesterController {
     return this.semesterService.createSemester(body, user.id);
   }
 }
-
-const extractLimitAndOffset = (param: any) => {
-  return { limit: param.limit || 20, offset: param.offset || 0 };
-};

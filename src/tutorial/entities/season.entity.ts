@@ -21,7 +21,7 @@ export class Season {
   @Column()
   createdAt: Date;
 
-  @OneToMany(() => Tutorial, (tutorial) => tutorial.id)
+  @OneToMany(() => Tutorial, (tutorial) => tutorial.season)
   tutorials: Tutorial[];
 
   @ManyToOne(() => Semester, (semester) => semester.id)

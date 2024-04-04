@@ -4,6 +4,7 @@ import { Season } from 'src/tutorial/entities/season.entity';
 import { Repository } from 'typeorm';
 import { SemesterService } from '../semester/semester.service';
 import { User } from 'src/user/entities/User.entity';
+import { CreateSeasonDto } from 'src/tutorial/dtos/create-season.dto';
 
 @Injectable()
 export class SeasonService {
@@ -16,6 +17,11 @@ export class SeasonService {
     const seasons = await this.seasonRepo.find({
       take: limit,
       skip: offset,
+      relations: {
+        createdBy: true,
+        semester: true,
+        tutorials: true,
+      },
     });
 
     return seasons;
@@ -25,6 +31,11 @@ export class SeasonService {
     const season = await this.seasonRepo.findOne({
       where: {
         id,
+      },
+      relations: {
+        tutorials: true,
+        createdBy: true,
+        semester: true,
       },
     });
 
@@ -41,8 +52,7 @@ export class SeasonService {
     return season;
   }
 
-  //   TODO: change body type to dto
-  async createNewSeason(body: any, user: User) {
+  async createNewSeason(body: CreateSeasonDto, user: User) {
     const semester = await this.semesterService.getSemesterById(
       body.semesterId,
     );
