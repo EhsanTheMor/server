@@ -74,4 +74,14 @@ export class TutorialService {
 
     return this.tutorialRepo.save(newTutorial);
   }
+
+  async deleteTutorial(id: number) {
+    const season = await this.tutorialRepo.findOne({
+      where: {
+        id,
+      },
+    });
+
+    return this.tutorialRepo.delete(season);
+  }
 }

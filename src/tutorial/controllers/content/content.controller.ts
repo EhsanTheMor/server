@@ -2,6 +2,7 @@ import {
   BadRequestException,
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
@@ -23,6 +24,7 @@ import { ContentTypes } from 'src/tutorial/entities/content.entity';
 import { ContentService } from 'src/tutorial/services/content/content.service';
 import { CurrentUserDecorator } from 'src/user/decorators/current-user.decorator';
 import { User } from 'src/user/entities/User.entity';
+import fs from 'fs';
 
 @UseGuards(AuthGuard)
 @Controller('content')
@@ -60,5 +62,19 @@ export class ContentController {
   @Get('getfile/:filename')
   async getfile(@Param('filename') filename: string, @Res() res: Response) {
     return res.sendFile(path.join(process.cwd(), 'contents', filename));
+  }
+
+  @Delete('/:id')
+  @UseGuards(AdminGuard)
+  async deleteContent(@Param('id') id: number) {
+    const content = await this.contentService.getContentById(id);
+    if (
+      content.type === ContentTypes.Image ||
+      content.type === ContentTypes.Video
+    ) {
+      fs.rmSync(path.join(process.cwd(), 'contents', content.description));
+    }
+
+    return this.contentService.deleteContent(id);
   }
 }

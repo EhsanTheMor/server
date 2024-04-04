@@ -2,6 +2,7 @@ import {
   BadRequestException,
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
@@ -50,5 +51,11 @@ export class TutorialController {
     @CurrentUserDecorator() user: User,
   ) {
     return this.tutorialService.createNewTutorial(body, user);
+  }
+
+  @Delete('/:id')
+  @UseGuards(AdminGuard)
+  deleteSemester(@Param('id') id: number) {
+    return this.tutorialService.deleteTutorial(id);
   }
 }

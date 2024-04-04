@@ -55,6 +55,7 @@ export class SemesterController {
   }
 
   @Delete('/:id')
+  @UseGuards(AdminGuard)
   deleteSemester(@Param('id') id: number) {
     return this.semesterService.deleteSemester(id);
   }

@@ -13,6 +13,16 @@ export class ContentService {
     private tutorialService: TutorialService,
   ) {}
 
+  async getContentById(id: number) {
+    const content = await this.contentRepo.findOne({
+      where: {
+        id,
+      },
+    });
+
+    return content;
+  }
+
   async createNewContent(
     body: CreateContentDto,
     description: string,
@@ -42,5 +52,15 @@ export class ContentService {
     newContent.tutorial = tutorial;
 
     return this.contentRepo.save(newContent);
+  }
+
+  async deleteContent(id: number) {
+    const season = await this.contentRepo.findOne({
+      where: {
+        id,
+      },
+    });
+
+    return this.contentRepo.delete(season);
   }
 }

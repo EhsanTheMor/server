@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
@@ -45,5 +46,12 @@ export class SeasonController {
     @Body() body: CreateSeasonDto,
   ) {
     return this.seasonService.createNewSeason(body, user);
+  }
+
+  @Post()
+  @UseGuards(AdminGuard)
+  @Delete('/:id')
+  deleteSeason(@Param('id') id: number) {
+    return this.seasonService.deleteSeason(id);
   }
 }

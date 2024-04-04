@@ -71,4 +71,14 @@ export class SeasonService {
 
     return this.seasonRepo.save(newSeason);
   }
+
+  async deleteSeason(id: number) {
+    const season = await this.seasonRepo.findOne({
+      where: {
+        id,
+      },
+    });
+
+    return this.seasonRepo.delete(season);
+  }
 }
