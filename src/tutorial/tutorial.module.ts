@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { TutorialController } from './controllers/tutorial.controller';
+import { TutorialController } from './controllers/tutorial/tutorial.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Content } from './entities/content.entity';
 import { Semester } from './entities/semester.entity';
@@ -8,15 +8,13 @@ import { Tutorial } from './entities/tutorial.entity';
 import { UserModule } from 'src/user/user.module';
 import { TutorialService } from './services/tutorial/tutorial.service';
 import { ContentService } from './services/content/content.service';
-import { SemesterController } from './controllers/semester/semester.controller';
-import { SeasonController } from './controllers/season/season.controller';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Content, Semester, Season, Tutorial]),
     UserModule,
   ],
-  controllers: [TutorialController, SemesterController, SeasonController],
+  controllers: [TutorialController],
   providers: [TutorialService, ContentService],
 })
 export class TutorialModule {}
