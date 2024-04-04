@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { CreateSemesterDto } from 'src/tutorial/dtos/create-semester.dto';
 import { Semester } from 'src/tutorial/entities/semester.entity';
 import { UserService } from 'src/user/service/user/user.service';
 import { Repository } from 'typeorm';
@@ -15,6 +16,10 @@ export class SemesterService {
     const semesters = await this.semesterRepo.find({
       take: limit,
       skip: offset,
+      relations: {
+        season: true,
+        createdBy: true,
+      },
     });
 
     return semesters;
@@ -24,6 +29,10 @@ export class SemesterService {
     const semester = await this.semesterRepo.findOne({
       where: {
         id,
+      },
+      relations: {
+        createdBy: true,
+        season: true,
       },
     });
 
@@ -35,13 +44,16 @@ export class SemesterService {
       where: {
         title,
       },
+      relations: {
+        season: true,
+        createdBy: true,
+      },
     });
 
     return semester;
   }
 
-  // TODO: change body to a dto
-  async createSemester(body: any, createrId: number) {
+  async createSemester(body: CreateSemesterDto, createrId: number) {
     const user = await this.userService.getUserById(createrId);
 
     const semester = await this.semesterRepo.create({

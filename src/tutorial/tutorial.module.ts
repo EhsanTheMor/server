@@ -8,13 +8,17 @@ import { Tutorial } from './entities/tutorial.entity';
 import { UserModule } from 'src/user/user.module';
 import { TutorialService } from './services/tutorial/tutorial.service';
 import { ContentService } from './services/content/content.service';
+import { SemesterController } from './controllers/semester/semester.controller';
+import { SeasonController } from './controllers/season/season.controller';
+import { SeasonService } from './services/season/season.service';
+import { SemesterService } from './services/semester/semester.service';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Content, Semester, Season, Tutorial]),
     UserModule,
   ],
-  controllers: [TutorialController],
-  providers: [TutorialService, ContentService],
+  controllers: [TutorialController, SemesterController, SeasonController],
+  providers: [TutorialService, ContentService, SeasonService, SemesterService],
 })
 export class TutorialModule {}
