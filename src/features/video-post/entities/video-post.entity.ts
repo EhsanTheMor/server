@@ -21,6 +21,7 @@ export class VideoPost {
   @ManyToOne(
     () => VideoPostCategory,
     (videoPostCategory) => videoPostCategory.videoPosts,
+    { onDelete: 'CASCADE' },
   )
   category: VideoPostCategory;
 }
