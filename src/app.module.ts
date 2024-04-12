@@ -16,13 +16,25 @@ import { MessageModule } from './features/message/message.module';
 import { CurrentUserMiddleware } from './middlewares/current-user.middleware';
 import { Post } from './features/post/entities/post.entity';
 import { VideoPostModule } from './features/video-post/video-post.module';
+import { VideoPost } from './features/video-post/entities/video-post.entity';
+import { VideoPostCategory } from './features/video-post/entities/video-post-category.entity';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: 'db.sqlite',
-      entities: [User, Post, Category, Semester, Season, Tutorial, Content],
+      entities: [
+        User,
+        Post,
+        Category,
+        Semester,
+        Season,
+        Tutorial,
+        Content,
+        VideoPost,
+        VideoPostCategory,
+      ],
       synchronize: true,
     }),
     UserModule,
