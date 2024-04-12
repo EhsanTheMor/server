@@ -15,6 +15,14 @@ export class VideoPostCategoryService {
     return this.videoPostCategoryRepo.find();
   }
 
+  getCategoryById(id: number) {
+    return this.videoPostCategoryRepo.findOne({
+      where: {
+        id,
+      },
+    });
+  }
+
   createNewVideoPostCategory(body: CreateVideoPostCategoryDto) {
     const newCategory = this.videoPostCategoryRepo.create({
       title: body.title,
@@ -30,6 +38,6 @@ export class VideoPostCategoryService {
         id,
       },
     });
-    return this.videoPostCategoryRepo.delete(category);
+    return await this.videoPostCategoryRepo.delete(category);
   }
 }

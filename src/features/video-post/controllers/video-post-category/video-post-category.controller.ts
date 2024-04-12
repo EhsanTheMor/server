@@ -7,12 +7,12 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { AuthGuard } from 'src/guards/auth.guard';
 import { AdminGuard } from 'src/guards/admin.guard';
 import { VideoPostCategoryService } from '../../services/video-post-category/video-post-category.service';
 import { Serialize } from 'src/interceptors/serialize.interceptor';
 import { CreateVideoPostCategoryDto } from '../../dtos/create-video-post-category.dto';
 import { CreateVideoPostCategoryResponse } from '../../dtos/create-video-post-category-response.dto';
+import { AuthGuard } from 'src/guards/auth.guard';
 
 @UseGuards(AuthGuard)
 @Controller('video-post-category')
@@ -24,15 +24,15 @@ export class VideoPostCategoryController {
     return this.videoPostCategoryService.getCategories();
   }
 
+  @Post()
   @UseGuards(AdminGuard)
   @Serialize(CreateVideoPostCategoryResponse)
-  @Post()
   createNewVideoPostCategory(@Body() body: CreateVideoPostCategoryDto) {
     return this.videoPostCategoryService.createNewVideoPostCategory(body);
   }
 
+  @Delete('/:id')
   @UseGuards(AdminGuard)
-  @Delete(':id')
   deleteVideoPostCatory(@Param('id') id: number) {
     return this.videoPostCategoryService.deleteCategory(id);
   }

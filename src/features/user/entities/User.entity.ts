@@ -13,6 +13,8 @@ import { Semester } from 'src/features/tutorial/entities/semester.entity';
 import { Season } from 'src/features/tutorial/entities/season.entity';
 import { Category } from 'src/features/post/entities/category.entity';
 import { Post } from 'src/features/post/entities/post.entity';
+import { VideoPostCategory } from 'src/features/video-post/entities/video-post-category.entity';
+import { VideoPost } from 'src/features/video-post/entities/video-post.entity';
 
 @Entity()
 export class User {
@@ -51,6 +53,12 @@ export class User {
 
   @OneToMany(() => Category, (category) => category.createdBy)
   createdCategories: Category[];
+
+  @OneToMany(() => VideoPostCategory, (category) => category.createdBy)
+  createdVideoPostCategories: VideoPostCategory[];
+
+  @OneToMany(() => VideoPost, (videoPost) => videoPost.createdBy)
+  createdVideoPosts: VideoPost[];
 
   @OneToMany(() => Post, (post) => post.createdBy)
   posts: Post[];
