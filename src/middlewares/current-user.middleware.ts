@@ -2,7 +2,7 @@ import { Injectable, NestMiddleware } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { NextFunction, Request, Response } from 'express';
 import { jwtConstants } from 'src/constants/constants';
-import { UserService } from 'src/user/service/user/user.service';
+import { UserService } from 'src/features/user/service/user/user.service';
 
 declare global {
   namespace Express {
@@ -21,7 +21,10 @@ export class CurrentUserMiddleware implements NestMiddleware {
 
   async use(req: Request, res: Response, next: NextFunction) {
     // checkes if it has jwt authorization header
-    const jwt = req.headers['authorization'];
+    let jwt = req.headers['authorization'];
+    if (!jwt) {
+      jwt = req.headers['Authorization'] as string;
+    }
 
     if (!jwt) {
       return next();
