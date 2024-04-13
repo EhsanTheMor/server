@@ -68,6 +68,7 @@ export class ContentController {
   @UseGuards(AdminGuard)
   async deleteContent(@Param('id') id: number) {
     const content = await this.contentService.getContentById(id);
+
     if (
       content.type === ContentTypes.Image ||
       content.type === ContentTypes.Video
