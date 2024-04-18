@@ -5,6 +5,7 @@ import { TutorialService } from '../tutorial/tutorial.service';
 import { Content } from '../../entities/content.entity';
 import { CreateContentDto } from '../../dtos/create-content.dto';
 import { User } from 'src/features/user/entities/User.entity';
+import { Tutorial } from '../../entities/tutorial.entity';
 
 @Injectable()
 export class ContentService {
@@ -12,6 +13,17 @@ export class ContentService {
     @InjectRepository(Content) private contentRepo: Repository<Content>,
     private tutorialService: TutorialService,
   ) {}
+
+  getContentsOfOneTutorial(tutorial: Tutorial) {
+    return this.contentRepo.find({
+      where: {
+        tutorial,
+      },
+      order: {
+        description: 'ASC',
+      },
+    });
+  }
 
   async getContentById(id: number) {
     const content = await this.contentRepo.findOne({

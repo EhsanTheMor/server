@@ -6,6 +6,7 @@ import {
   Get,
   Param,
   Post,
+  Query,
   Res,
   UploadedFile,
   UseGuards,
@@ -25,11 +26,32 @@ import { CreateContentDto } from '../../dtos/create-content.dto';
 import { CurrentUserDecorator } from 'src/features/user/decorators/current-user.decorator';
 import { User } from 'src/features/user/entities/User.entity';
 import { ContentTypes } from '../../entities/content.entity';
+import { TutorialService } from '../../services/tutorial/tutorial.service';
 
 @UseGuards(AuthGuard)
 @Controller('content')
 export class ContentController {
-  constructor(private contentService: ContentService) {}
+  constructor(
+    private contentService: ContentService,
+    private tutorialService: TutorialService,
+  ) {}
+
+  @Get()
+  async getContentsOfOneTutorial(@Query() query: any) {
+    if (!query.tutorialId) {
+      throw new BadRequestException('درس مورد نظر یافت نشد.');
+    }
+
+    const tutorialId = Number(query.tutorialId);
+
+    const tutorial = await this.tutorialService.getTutorialById(tutorialId);
+
+    if (!tutorial) {
+      throw new BadRequestException('درس مورد نظر یافت نشد.');
+    }
+
+    return this.contentService.getContentsOfOneTutorial(tutorial);
+  }
 
   @Post()
   @Serialize(CreateContentResponseDto)

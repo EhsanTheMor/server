@@ -49,9 +49,8 @@ export class SeasonController {
     return this.seasonService.createNewSeason(body, user);
   }
 
-  @Post()
-  @UseGuards(AdminGuard)
   @Delete('/:id')
+  @UseGuards(AdminGuard)
   deleteSeason(@Param('id') id: number) {
     return this.seasonService.deleteSeason(id);
   }
