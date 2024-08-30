@@ -16,7 +16,9 @@ import { CreateCategoryDto } from '../../dtos/create-category.dto';
 import { CurrentUserDecorator } from 'src/features/user/decorators/current-user.decorator';
 import { User } from 'src/features/user/entities/User.entity';
 import { BuyCategoriesDto } from '../../dtos/buy-categories.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags("Categories")
 @UseGuards(AuthGuard)
 @Controller('category')
 export class CategoryController {

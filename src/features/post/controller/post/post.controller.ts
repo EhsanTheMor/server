@@ -20,7 +20,9 @@ import { GetAllPostDto } from '../../dtos/get-all-post.dto';
 import { PostService } from '../../service/post/post.service';
 import { PostDto } from '../../dtos/post.dto';
 import { storage } from '../../constants/file-upload-storage.constants';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Post')
 @UseGuards(AuthGuard)
 @Controller('post')
 export class PostController {

@@ -25,7 +25,9 @@ import path from 'path';
 import { AdminGuard } from 'src/guards/admin.guard';
 import { extractLimitAndOffset } from 'src/helpers/controller-offset-limit.helper';
 import fs from 'fs';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('VideoPost')
 @UseGuards(AuthGuard)
 @Controller('video-post')
 export class VideoPostController {

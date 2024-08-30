@@ -13,7 +13,9 @@ import { Serialize } from 'src/interceptors/serialize.interceptor';
 import { CreateVideoPostCategoryDto } from '../../dtos/create-video-post-category.dto';
 import { CreateVideoPostCategoryResponse } from '../../dtos/create-video-post-category-response.dto';
 import { AuthGuard } from 'src/guards/auth.guard';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('VideoPostCategory')
 @UseGuards(AuthGuard)
 @Controller('video-post-category')
 export class VideoPostCategoryController {

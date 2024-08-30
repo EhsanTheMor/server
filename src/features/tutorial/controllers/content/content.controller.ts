@@ -3,7 +3,7 @@ import {
   Body,
   Controller,
   Delete,
-  Get,
+  Get, Injectable,
   Param,
   Post,
   Query,
@@ -27,7 +27,9 @@ import { CurrentUserDecorator } from 'src/features/user/decorators/current-user.
 import { User } from 'src/features/user/entities/User.entity';
 import { ContentTypes } from '../../entities/content.entity';
 import { TutorialService } from '../../services/tutorial/tutorial.service';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags("content")
 @UseGuards(AuthGuard)
 @Controller('content')
 export class ContentController {

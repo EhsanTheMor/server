@@ -18,7 +18,9 @@ import { CreateSeasonResponseDto } from '../../dtos/create-season-response';
 import { CurrentUserDecorator } from 'src/features/user/decorators/current-user.decorator';
 import { CreateSeasonDto } from '../../dtos/create-season.dto';
 import { User } from 'src/features/user/entities/User.entity';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Season')
 @UseGuards(AuthGuard)
 @Controller('season')
 export class SeasonController {

@@ -19,7 +19,9 @@ import { CreateTutorialResponseDto } from '../../dtos/create-tutorial-response.d
 import { CreateTutorialDto } from '../../dtos/create-tutorial.dto';
 import { User } from 'src/features/user/entities/User.entity';
 import { CurrentUserDecorator } from 'src/features/user/decorators/current-user.decorator';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Tutorial')
 @UseGuards(AuthGuard)
 @Controller('tutorial')
 export class TutorialController {

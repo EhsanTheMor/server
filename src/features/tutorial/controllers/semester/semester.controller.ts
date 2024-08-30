@@ -18,7 +18,9 @@ import { AdminGuard } from 'src/guards/admin.guard';
 import { User } from 'src/features/user/entities/User.entity';
 import { CurrentUserDecorator } from 'src/features/user/decorators/current-user.decorator';
 import { CreateSemesterDto } from '../../dtos/create-semester.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Semester')
 @UseGuards(AuthGuard)
 @Controller('semester')
 export class SemesterController {
