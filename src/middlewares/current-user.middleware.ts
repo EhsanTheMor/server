@@ -20,7 +20,7 @@ export class CurrentUserMiddleware implements NestMiddleware {
   ) {}
 
   async use(req: Request, res: Response, next: NextFunction) {
-    // checkes if it has jwt authorization header
+    // checks if it has jwt authorization header
     let jwt = req.headers['authorization'];
     if (!jwt) {
       jwt = req.headers['Authorization'] as string;
@@ -30,7 +30,7 @@ export class CurrentUserMiddleware implements NestMiddleware {
       return next();
     }
 
-    // checkes if the token is still valid or not
+    // checks if the token is still valid or not
     const token = jwt.split(' ')[1];
     let user;
     try {
@@ -41,7 +41,7 @@ export class CurrentUserMiddleware implements NestMiddleware {
       return next();
     }
 
-    // checkes if user exists or not
+    // checks if user exists or not
     const currentUser = await this.userService.getUserByEmail(user.email);
     if (!currentUser) {
       return next();
